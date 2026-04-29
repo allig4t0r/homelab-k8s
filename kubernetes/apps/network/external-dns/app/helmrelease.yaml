@@ -23,7 +23,6 @@ spec:
       - --pihole-server=http://172.17.0.2
       - --pihole-tls-skip-verify
       - --pihole-api-version=6
-      - --dry-run
     triggerLoopOnEvent: true
     policy: sync
     registry: noop
