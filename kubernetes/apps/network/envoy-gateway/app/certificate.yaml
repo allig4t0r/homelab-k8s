@@ -7,7 +7,7 @@ metadata:
 spec:
   isCA: true
   dnsNames:
-    - "kube.ag"
+    - kube.ag
     - "*.kube.ag"
   commonName: kube-homelab
   secretName: kube-homelab-tls
@@ -17,6 +17,6 @@ spec:
     algorithm: ECDSA
     size: 256
   issuerRef:
-    name: kube-homelab-issuer
+    name: selfsigned-issuer
     kind: ClusterIssuer
     group: cert-manager.io
