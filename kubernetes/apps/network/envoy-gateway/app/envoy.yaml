@@ -52,7 +52,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: internal.kube.ag
-      lbipam.cilium.io/ips: "172.17.8.251"
+      lbipam.cilium.io/ips: 172.17.44.44
   listeners:
     - name: http
       protocol: HTTP
@@ -104,7 +104,7 @@ spec:
   clientIPDetection:
     xForwardedFor:
       trustedCIDRs:
-        - "10.42.0.0/16"
+        - 10.42.0.0/16
   http2:
     onInvalidMessage: TerminateStream
   http3: {}
