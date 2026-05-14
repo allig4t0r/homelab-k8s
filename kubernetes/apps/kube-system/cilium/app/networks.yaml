@@ -1,12 +1,11 @@
----
 apiVersion: cilium.io/v2
 kind: CiliumLoadBalancerIPPool
 metadata:
-  name: k8s-lb-pool
+  name: pool
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: 172.17.44.0/24
+    - cidr: 172.17.8.0/24
 ---
 apiVersion: cilium.io/v2
 kind: CiliumBGPAdvertisement
@@ -22,12 +21,12 @@ spec:
           - LoadBalancerIP
       selector:
         matchExpressions:
-          - { key: somekey, operator: NotIn, values: ["never-used-value"] }
+          - {key: somekey, operator: NotIn, values: ["never-used-value"]}
 ---
 apiVersion: cilium.io/v2
 kind: CiliumBGPPeerConfig
 metadata:
-  name: bgp-peer-config
+  name: bgp-peer-config-v4
 spec:
   timers:
     holdTimeSeconds: 90
@@ -51,11 +50,11 @@ spec:
     matchLabels:
       kubernetes.io/os: linux
   bgpInstances:
-    - name: talos-bgp-instance
+    - name: instance-65008
       localASN: 65008
       peers:
-        - name: mikrotik
+        - name: peer-65222-v4
           peerASN: 65222
           peerAddress: 172.17.8.1
           peerConfigRef:
-            name: bgp-peer-config
+            name: bgp-peer-config-v4
