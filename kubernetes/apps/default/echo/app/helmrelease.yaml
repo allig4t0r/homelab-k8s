@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -38,7 +37,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
@@ -57,14 +56,14 @@ spec:
     serviceMonitor:
       app:
         endpoints:
-          - port: http
+          - port: https
     route:
       app:
         hostnames: ["{{ .Release.Name }}.kube.ag"]
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: http
+            sectionName: https
         rules:
           - backendRefs:
               - identifier: app
