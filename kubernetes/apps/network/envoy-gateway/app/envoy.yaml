@@ -1,4 +1,3 @@
----
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyProxy
 metadata:
@@ -52,7 +51,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: internal.kube.ag
-      lbipam.cilium.io/ips: 172.17.44.44
+      lbipam.cilium.io/ips: 172.17.8.251
   listeners:
     - name: http
       protocol: HTTP

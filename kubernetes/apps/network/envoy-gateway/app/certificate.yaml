@@ -1,4 +1,3 @@
----
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -17,6 +16,6 @@ spec:
     algorithm: ECDSA
     size: 256
   issuerRef:
-    name: selfsigned-issuer
+    name: kube-homelab-issuer
     kind: ClusterIssuer
     group: cert-manager.io

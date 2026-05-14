@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -10,12 +9,12 @@ spec:
   interval: 1h
   values:
     fullnameOverride: k8s-gateway
-    domain: "kube.ag"
+    domain: kube.ag
     ttl: 1
     service:
       type: LoadBalancer
       port: 53
       annotations:
-        lbipam.cilium.io/ips: 172.17.44.53
+        lbipam.cilium.io/ips: 172.17.8.252
       externalTrafficPolicy: Cluster
     watchedResources: ["HTTPRoute", "Service"]
