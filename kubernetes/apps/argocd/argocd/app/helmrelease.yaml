@@ -1,0 +1,72 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: argocd
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: argocd
+  interval: 1h
+  values:
+    global:
+      # -- Default domain used by all components
+      ## Used for ingresses, certificates, SSO, notifications, etc.
+      domain: cd.kube.ag
+    configs:
+      params:
+        # https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-2-multiple-ingress-objects-and-hosts
+        server.insecure: true
+      ssh:
+        knownHosts: |
+          [ssh.github.com]:443 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+          [ssh.github.com]:443 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+          [ssh.github.com]:443 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
+          github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+          github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+          github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
+          gitlab.ag ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM89fa02faWTlF3VltUChlSh0XmH0oacygSUD2f+GE8/
+          gitlab.ag ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMZBAkyyx/ysan8JHFrvcu/3L53CZpcBmk9MX8k2Y01Ls/wBM6K2yBQPPgAqhV9iDAbmR+7U8TZ4lNHvLmLFSGw=
+          gitlab.ag ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCVFbVjJx3pOncy9ml92WFt+BoAWWtsLAaHrS3JDpA5xVAKYDsp5sk9vfZjfh7vOcquGWKKQCOOKxt8UkkNVWzngEw/STgWU7PK/fj2xHsXHTGcnVBubaplAaCIzuyu1H7cBj4YPbu44xnF1nymz5psh2g3NjLwLl4UddS86U4wRGVCFFZ9O4Y/m9cJMIEFF9ItmuaM3NHagiE73A/fbqpfWJGGhHu8GriMCrw82GPAhISs6ylupe2J1dy4xOgI5ILYCYvdxf5AHh8LiWYDy8waHn+7jx7v8PvWeV03dzy5ssMKsVJAxuj5CxRXzrEwOBzP4nHUkQahlcvjNlbVKcPKOBEnQdDIwTj7vauzUjnQW+xGIcM/SXdwOBUIoaYzQl29cgzAbJ9MPji4ywMgu+3lfyEgxRCNAW6/715cmsHmjniqFuTupNSKYUAHXBr85BNKGNuMjR7WwTfLNp7My+BGwBaCG5UW+bZv5xUVyXolp2fHY4rLhZnx7t3AKbYVCCc=
+    redis:
+      image:
+        repository: redis
+        tag: 8.6.3-alpine
+    server:
+      # insecure: true
+      # extraArgs:
+      #   - --insecure
+      httproute:
+        enabled: true
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        hostnames: ["cd.kube.ag"]
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - name: argocd-server
+                port: 80
+      grpcroute:
+        # -- Enable GRPCRoute resource for Argo CD server (Gateway API)
+        enabled: true
+        # -- Gateway API parentRefs for the GRPCRoute
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        # -- List of hostnames for the GRPCRoute
+        hostnames: ["cd.kube.ag"]
+        # -- GRPCRoute rules configuration
+        rules:
+          - matches:
+              - headers:
+                  - name: Content-Type
+                    type: RegularExpression
+                    value: "^application/grpc.*$"
+            backendRefs:
+              - name: argocd-server
+                port: 443
