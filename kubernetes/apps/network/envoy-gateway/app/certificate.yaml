@@ -3,7 +3,6 @@ kind: Certificate
 metadata:
   name: kube-homelab
 spec:
-  isCA: true
   dnsNames:
     - kube.ag
     - "*.kube.ag"
